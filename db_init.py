@@ -26,6 +26,9 @@ def insert_demo_modules():
 
 with app.app_context():
     try:
+        # purge the database
+        db.drop_all()
+        print("Tables dropped successfully!")
         db.create_all()
         print("Tables created successfully!")
         insert_demo_modules()
