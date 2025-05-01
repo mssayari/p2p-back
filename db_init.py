@@ -9,12 +9,12 @@ app = create_app()
 
 def insert_demo_modules():
     demo_modules = [
-        {"id": 1, "icon": "/assets/images/subjects/maths.png", "name": "Math", "slug": "mathematics"},
-        {"id": 2, "icon": "/assets/images/subjects/ai.png", "name": "AI", "slug": "artificial-intelligence"},
-        {"id": 3, "icon": "/assets/images/subjects/python.png", "name": "Python", "slug": "python"},
-        {"id": 4, "icon": "/assets/images/subjects/c-plus-plus.png", "name": "C++", "slug": "c-plus-plus"},
-        {"id": 5, "icon": "/assets/images/subjects/android.png", "name": "Android", "slug": "android"},
-        {"id": 6, "icon": "/assets/images/subjects/html.png", "name": "HTML", "slug": "html"},
+        {"id": 1, "icon": "static/modules/maths.png", "name": "Math", "slug": "mathematics"},
+        {"id": 2, "icon": "static/modules/ai.png", "name": "AI", "slug": "artificial-intelligence"},
+        {"id": 3, "icon": "static/modules/python.png", "name": "Python", "slug": "python"},
+        {"id": 4, "icon": "static/modules/c-plus-plus.png", "name": "C++", "slug": "c-plus-plus"},
+        {"id": 5, "icon": "static/modules/android.png", "name": "Android", "slug": "android"},
+        {"id": 6, "icon": "static/modules/html.png", "name": "HTML", "slug": "html"},
     ]
 
     for module_data in demo_modules:
