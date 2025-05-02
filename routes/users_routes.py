@@ -6,10 +6,10 @@ from models.user import User
 from models.module import Module
 from extensions import db
 
-user_bp = Blueprint('user', __name__)
+users_bp = Blueprint('users', __name__)
 
 
-@user_bp.route("/users/update", methods=["PUT"])
+@users_bp.route("/users/update", methods=["PUT"])
 @jwt_required()
 def update_user():
     current_user = get_jwt_identity()
@@ -74,7 +74,40 @@ def update_user():
     return jsonify({"success": True, "message": "User updated successfully", "user": user.to_dict()}), 200
 
 
-@user_bp.route("/users/delete", methods=["DELETE"])
+@users_bp.route("/tutors", methods=["GET"])
+@jwt_required()
+def get_tutors():
+    # Get all tutors
+    tutors = User.query.filter_by(is_tutor=True).all()
+    tutors_list = [tutor.to_dict() for tutor in tutors]
+
+    return jsonify({"success": True, "message": "List of tutors", "tutors": tutors_list}), 200
+
+
+@users_bp.route("/tutors/<int:tutor_id>", methods=["GET"])
+@jwt_required()
+def get_tutor(tutor_id):
+    # Get a specific tutor by ID
+    tutor = User.query.filter_by(id=tutor_id, is_tutor=True).first()
+
+    if not tutor:
+        return jsonify({"success": False, "message": "Tutor not found"}), 404
+
+    return jsonify({"success": True, "message": "Tutor details", "tutor": tutor.to_dict()}), 200
+
+
+@users_bp.route("/tutors/skills/<int:skill_id>", methods=["GET"])
+@jwt_required()
+def get_tutors_by_skill(skill_id):
+    # Get all tutors with a specific skill
+    tutors = User.query.join(User.skills).filter(Module.id == skill_id, User.is_tutor == True).all()
+    tutors_list = [tutor.to_dict() for tutor in tutors]
+    if not tutors_list:
+        return jsonify({"success": False, "message": "No tutors found with this skill"}), 404
+    return jsonify({"success": True, "message": "List of tutors with this skill", "tutors": tutors_list}), 200
+
+
+@users_bp.route("/users/delete", methods=["DELETE"])
 @jwt_required()
 def delete_user():
     current_user = get_jwt_identity()
